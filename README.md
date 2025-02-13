@@ -21,7 +21,6 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[mail_notification_custom_subject](mail_notification_custom_subject/) | 18.0.1.0.0 | [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Apply a custom subject to mail notifications
 [mail_notification_with_history](mail_notification_with_history/) | 18.0.1.0.0 | [![TDu](https://github.com/TDu.png?size=30px)](https://github.com/TDu) | Add the previous chatter discussion into new email notifications.
 [mail_thread_create_nolog](mail_thread_create_nolog/) | 18.0.1.0.0 | [![sebalix](https://github.com/sebalix.png?size=30px)](https://github.com/sebalix) | Display a fake (non-stored) create log in the chatter.
 
