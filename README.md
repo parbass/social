@@ -70,7 +70,7 @@ addon | version | maintainers | summary
 [mass_mailing_list_dynamic](mass_mailing_list_dynamic/) | 16.0.2.1.0 |  | Mass mailing lists that get autopopulated
 [mass_mailing_partner](mass_mailing_partner/) | 16.0.2.0.1 |  | Link partners with mass-mailing
 [mass_mailing_resend](mass_mailing_resend/) | 16.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Resend mass mailings
-[mass_mailing_unique](mass_mailing_unique/) | 16.0.1.0.1 |  | Avoids duplicate mailing lists and contacts
+[mass_mailing_unique](mass_mailing_unique/) | 16.0.1.1.0 |  | Avoids duplicate mailing lists and contacts
 [outgoing_email_by_model](outgoing_email_by_model/) | 16.0.1.0.0 | [![mmequignon](https://github.com/mmequignon.png?size=30px)](https://github.com/mmequignon) | Outgoing Email by Model
 
 [//]: # (end addons)
