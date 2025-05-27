@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_search_mail_content](base_search_mail_content/) | 16.0.1.0.3 |  | Base Search Mail Content
+[base_search_mail_content](base_search_mail_content/) | 16.0.1.0.4 |  | Base Search Mail Content
 [base_user_signature](base_user_signature/) | 16.0.1.0.0 | [![imlopes](https://github.com/imlopes.png?size=30px)](https://github.com/imlopes) | Base User Signature
 [email_template_qweb](email_template_qweb/) | 16.0.1.0.0 |  | Use the QWeb templating mechanism for emails
 [fetchmail_thread_default](fetchmail_thread_default/) | 16.0.1.0.0 |  | Post unkonwn messages to an existing thread
