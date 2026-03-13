@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="telegram_bot_view_list" model="ir.ui.view">
         <field name="name">telegram.bot.view.list</field>
         <field name="model">telegram.bot</field>
         <field name="arch" type="xml">
             <list>
-                <field name="name"/>
-                <field name="active"/>
+                <field name="name" />
+                <field name="active" />
             </list>
         </field>
     </record>
@@ -17,31 +17,37 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_fetch_chats"
-                            string="Fetch Chats"
-                            type="object"
-                            invisible="not active"/>
-                    <button name="action_test_connection"
-                            string="Test Connection"
-                            type="object"
-                            class="oe_highlight"
-                            invisible="not active"/>
+                    <button
+                        name="action_fetch_chats"
+                        string="Fetch Chats"
+                        type="object"
+                        invisible="not active"
+                    />
+                    <button
+                        name="action_test_connection"
+                        string="Test Connection"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="not active"
+                    />
                 </header>
                 <sheet>
                     <div class="oe_title">
-                        <label for="name"/>
-                        <h1><field name="name" placeholder="e.g. Odoo Alert Bot"/></h1>
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. Odoo Alert Bot" />
+                        </h1>
                     </div>
                     <group>
-                        <field name="token" password="True"/>
-                        <field name="active"/>
+                        <field name="token" password="True" />
+                        <field name="active" />
                     </group>
                     <notebook>
                         <page string="Chats" name="chats">
                             <field name="chat_ids">
                                 <list editable="bottom">
-                                    <field name="name"/>
-                                    <field name="chat_id"/>
+                                    <field name="name" />
+                                    <field name="chat_id" />
                                 </list>
                             </field>
                         </page>
@@ -57,6 +63,16 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_telegram_root" name="Telegram" parent="base.menu_custom" sequence="10"/>
-    <menuitem id="menu_telegram_bots" name="Bots" parent="menu_telegram_root" action="action_telegram_bot"/>
+    <menuitem
+        id="menu_telegram_root"
+        name="Telegram"
+        parent="base.menu_custom"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_telegram_bots"
+        name="Bots"
+        parent="menu_telegram_root"
+        action="action_telegram_bot"
+    />
 </odoo>
