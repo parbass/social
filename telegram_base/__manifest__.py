@@ -9,10 +9,11 @@
     "depends": [
         "base",
         "mail",
+        "mail_gateway_telegram",
     ],
     "data": [
         "security/ir.model.access.csv",
-        "views/telegram_bot_views.xml",
+        "views/mail_gateway_views.xml",
     ],
     "installable": True,
     "application": False,

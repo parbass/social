@@ -14,9 +14,10 @@ class TestTelegramBot(TransactionCase):
     def setUp(self):
         super().setUp()
         # Create a test bot
-        self.bot = self.env["telegram.bot"].create(
+        self.bot = self.env["mail.gateway"].create(
             {
                 "name": "Test Bot",
+                "gateway_type": "telegram",
                 "token": "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
             }
         )
@@ -25,7 +26,7 @@ class TestTelegramBot(TransactionCase):
             {
                 "name": "Test Chat",
                 "chat_id": "1856618864",
-                "bot_id": self.bot.id,
+                "gateway_id": self.bot.id,
             }
         )
 
@@ -45,7 +46,7 @@ class TestTelegramBot(TransactionCase):
 
     def test_action_test_connection_no_chats(self):
         """Test action_test_connection raises UserError when no chats"""
-        self.bot.chat_ids = [(5, 0, 0)]  # Clear chats
+        self.bot.telegram_chat_ids = [(5, 0, 0)]  # Clear chats
         with self.assertRaises(UserError):
             self.bot.action_test_connection()
 
@@ -60,7 +61,7 @@ class TestTelegramBot(TransactionCase):
         self.assertEqual(mock_post.call_count, 1)
         self.assertEqual(res.get("effect", {}).get("type"), "rainbow_man")
 
-    @mute_logger("odoo.addons.telegram_base.models.telegram_bot")
+    @mute_logger("odoo.addons.telegram_base.models.mail_gateway")
     @patch("requests.Session.post")
     def test_send_message_failure(self, mock_post):
         """Test handling of a connection failure"""
@@ -127,7 +128,7 @@ class TestTelegramBot(TransactionCase):
         result = self.bot.action_fetch_chats()
         self.assertTrue(result)
 
-    @mute_logger("odoo.addons.telegram_base.models.telegram_bot")
+    @mute_logger("odoo.addons.telegram_base.models.mail_gateway")
     @patch("requests.get")
     def test_action_fetch_chats_exception(self, mock_get):
         """Test action_fetch_chats handles exceptions"""

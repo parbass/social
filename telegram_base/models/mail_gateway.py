@@ -1,5 +1,4 @@
 import logging
-
 import requests
 
 from odoo import _, fields, models
@@ -8,18 +7,19 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-class TelegramBot(models.Model):
-    _name = "telegram.bot"
-    _description = "Telegram Bot Configuration"
+class MailGateway(models.Model):
+    _inherit = "mail.gateway"
 
-    name = fields.Char(required=True, help="Unique name for the bot configuration")
-    token = fields.Char(required=True, help="Bot token from BotFather")
-    active = fields.Boolean(default=True)
-    chat_ids = fields.One2many("telegram.chat", "bot_id", string="Authorized Chats")
+    telegram_chat_ids = fields.One2many(
+        "telegram.chat", "gateway_id", string="Authorized Chats"
+    )
 
     def send_message(self, chat_id, message, parse_mode="HTML"):
         """Low-level method to send a raw message via Telegram API"""
         self.ensure_one()
+        if self.gateway_type != "telegram":
+            return False
+
         url = f"https://api.telegram.org/bot{self.token}/sendMessage"
         payload = {"chat_id": chat_id, "text": message, "parse_mode": parse_mode}
         try:
@@ -32,14 +32,17 @@ class TelegramBot(models.Model):
             return False
 
     def action_test_connection(self):
-        """Button to test connection to all registered chats"""
+        """Button to test connection to all registered simple chats"""
         self.ensure_one()
-        if not self.chat_ids:
+        if self.gateway_type != "telegram":
+            return False
+
+        if not self.telegram_chat_ids:
             raise UserError(_("Please add or fetch at least one Chat ID first."))
 
-        for chat in self.chat_ids:
+        for chat in self.telegram_chat_ids:
             msg = (
-                _("<b>Success!</b> Connection from Odoo 18 to <i>%s</i> is working.")
+                _("<b>Success!</b> Connection from Odoo to <i>%s</i> is working.")
                 % self.name
             )
             self.send_message(chat.chat_id, msg)
@@ -55,6 +58,15 @@ class TelegramBot(models.Model):
     def action_fetch_chats(self):
         """Automatically discovers Chat IDs of people who messaged the bot"""
         self.ensure_one()
+        if self.gateway_type != "telegram":
+            return False
+
+        if self.webhook_key:
+            raise UserError(_(
+            "Telegram does not allow fetching updates manually while a Webhook is active. "
+            "Please disable the Webhook before using 'Fetch Chats'."
+        ))
+
         url = f"https://api.telegram.org/bot{self.token}/getUpdates"
         try:
             response = requests.get(url, timeout=10)
@@ -77,26 +89,15 @@ class TelegramBot(models.Model):
                     or "Unknown"
                 )
 
-                if not self.chat_ids.filtered(lambda c, c_id=c_id: c.chat_id == c_id):
+                if not self.telegram_chat_ids.filtered(lambda c, c_id=c_id: c.chat_id == c_id):
                     self.env["telegram.chat"].create(
                         {
                             "name": c_name,
                             "chat_id": c_id,
-                            "bot_id": self.id,
+                            "gateway_id": self.id,
                         }
                     )
             return True
         except Exception as e:
             _logger.error("Fetch failed: %s", e)
             return False
-
-
-class TelegramChat(models.Model):
-    _name = "telegram.chat"
-    _description = "Telegram Chat"
-
-    name = fields.Char(
-        required=True, help="Friendly name for the chat (e.g. Admin Group)"
-    )
-    chat_id = fields.Char(required=True, help="Numeric ID from Telegram")
-    bot_id = fields.Many2one("telegram.bot", ondelete="cascade")
