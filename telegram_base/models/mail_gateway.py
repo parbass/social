@@ -1,4 +1,5 @@
 import logging
+
 import requests
 
 from odoo import _, fields, models
@@ -62,10 +63,13 @@ class MailGateway(models.Model):
             return False
 
         if self.webhook_key:
-            raise UserError(_(
-            "Telegram does not allow fetching updates manually while a Webhook is active. "
-            "Please disable the Webhook before using 'Fetch Chats'."
-        ))
+            raise UserError(
+                _(
+                    "Telegram does not allow fetching updates manually "
+                    "while a Webhook is active. "
+                    "Please disable the Webhook before using 'Fetch Chats'."
+                )
+            )
 
         url = f"https://api.telegram.org/bot{self.token}/getUpdates"
         try:
@@ -89,7 +93,9 @@ class MailGateway(models.Model):
                     or "Unknown"
                 )
 
-                if not self.telegram_chat_ids.filtered(lambda c, c_id=c_id: c.chat_id == c_id):
+                if not self.telegram_chat_ids.filtered(
+                    lambda c, c_id=c_id: c.chat_id == c_id
+                ):
                     self.env["telegram.chat"].create(
                         {
                             "name": c_name,

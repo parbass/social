@@ -24,7 +24,11 @@
 
             <!-- Add notebook page for Telegram specific simple chat IDs -->
             <xpath expr="//notebook" position="inside">
-                <page string="Telegram Chats" name="telegram_chats" invisible="gateway_type != 'telegram'">
+                <page
+                    string="Telegram Chats"
+                    name="telegram_chats"
+                    invisible="gateway_type != 'telegram'"
+                >
                     <field name="telegram_chat_ids">
                         <list editable="bottom">
                             <field name="name" />

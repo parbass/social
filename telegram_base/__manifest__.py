@@ -5,7 +5,7 @@
     "category": "Social",
     "author": "Anmol Garg, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/social",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
         "base",
         "mail",
