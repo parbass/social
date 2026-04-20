@@ -192,6 +192,7 @@ class MailGatewayWhatsappService(models.AbstractModel):
                     )
                     .mail_message_id
                 )
+                new_message.parent_id = related_message.id
                 if related_message and related_message.gateway_message_id:
                     new_related_message = (
                         self.env[related_message.gateway_message_id.model]
